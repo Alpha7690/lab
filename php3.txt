@@ -1,0 +1,39 @@
+<html>
+<body>
+<form action="prog 3.php" method="POST">
+    <label>enter word :</label><br>
+    <input type="text" name="str"><br>
+    <input type="submit">    
+</form>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $str = $_POST["str"];
+    $u=0;
+    $l=0;
+    $d=0;
+    $sp=0;
+    
+    for($i=0;$i<strlen($str);$i++) {
+        if (ctype_lower($str[$i]))
+        {
+            $l++;
+        }
+        elseif(ctype_upper($str[$i])){
+            $u++;
+        }
+        elseif(ctype_digit($str[$i])){
+            $d++;
+        }
+        elseif(ctype_punct($str[$i])){
+            $sp++;
+        }
+    }
+    echo "lower : $l <br>";
+    echo "upper : $u <br>";
+    echo "special : $sp <br>";
+    echo "digit : $d <br>";
+
+}
+?>
+</body>
+</html>
