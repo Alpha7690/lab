@@ -1,0 +1,75 @@
+<html>
+<body>
+<form action="prog5.php" method="POST">
+name:<input type="text" name="name"><br>
+book:<input type="text" name="book"><br>
+email:<input type="text" name="email"><br>
+roll:<input type="text" name="roll"><br>
+dept:<select name="dept">
+<option value="">select</option>
+<option value="DA">DA</option>
+<option value="CT">CT</option>
+<option value="CS">CS</option>
+<input type="submit" value="Submit">
+</select>
+</form>
+<?php
+$name=$email=$roll=$dept=$book="";
+$nameErr=$emailErr=$rollErr=$deptErr=$bookErr="";
+if ($_SERVER["REQUEST_METHOD"]=="POST")
+{
+    $name=$_POST["name"];
+    $email=$_POST["email"];
+    $roll=$_POST["roll"];
+    $dept=$_POST["dept"];
+    $book=$_POST["book"];
+    if (!$name)
+    {
+        $nameErr="Name is required";
+    }
+    elseif(!preg_match("/^[a-zA-Z]+$/",$name))
+    {
+        $nameErr="ONLY LETTERS ALLOWED";
+    }
+    if (!$email)
+    {
+        $emailErr="Mail is required";
+    }
+    elseif(!filter_var($email,FILTER_VALIDATE_EMAIL))
+    {
+        $nameErr="INVALID EMAIL FORM";
+    }
+    if(!$roll)
+    {
+        $rollErr="roll number is required"; 
+    }
+    elseif (!preg_match("/^[0-9]+$/",$roll)) 
+    {
+        $rollErr="only numbers allowed";
+    }
+    if (empty($dept))
+    {
+        $deptErr="Department is required";
+    }
+    else {
+        echo "$dept<br>";
+    }
+    if (!$book)
+    {
+        $bookErr="book is required";
+    }
+    if(!$nameErr && !$emailErr && !$rollErr)
+    {
+        echo "Name : $name <br> EMAIL : $email <br> roll : $roll <br> DEPT : $dept <br> BOOK : $book";
+    }
+    else {
+        echo $nameErr;
+        echo $rollErr;
+        echo $emailErr;
+        echo $deptErr;
+        echo $bookErr;
+    }
+}
+?>
+<body>
+<html>
