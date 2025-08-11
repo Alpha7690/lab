@@ -1,0 +1,46 @@
+<html>
+<body>
+
+<form action="prog1.php" method="POST">
+    <label>Enter your choice (1 for sum of digits, 2 for factorial):</label><br>
+    <input type="text" name="choice"><br>
+    <label>Enter number :</label><br>
+    <input type="text" name="num"><br>
+    <input type="submit">    
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $choice = $_POST["choice"];
+    $num=$_POST["num"];
+    $t = 1;
+    $sum = 0;
+    
+    switch($choice) {
+        case 1:
+            echo "Sum of digits: ";
+            while($num > 0){
+                $sum += $num % 10;
+                $num = (int)($num / 10);
+            }
+            echo "$sum<br>";
+            break;
+
+        case 2:
+            echo "Factorial : ";
+            while($num > 0){
+                $t *= $num;
+                $num--;
+            }
+            echo "$t<br>";
+            break;
+
+        default:
+            echo "Invalid choice. Please enter 1 or 2.<br>";
+    }
+}
+?>
+
+</body>
+</html>
+
