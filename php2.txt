@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Program 2: File Handling Functions </h1>
+<?php
+echo "<h3>Reading from samp2.txt:</h3>";
+$myfile = fopen("samp2.txt", "r") or die("Unable to open file!");
+echo nl2br(fread($myfile, filesize("samp2.txt")));
+fclose($myfile);
+
+echo "<h3>Writing (overwriting) samp2.txt:</h3>";
+$myfile = fopen("samp2.txt", "w") or die("Unable to open file!");
+$txt = "John Doe\n";
+fwrite($myfile, $txt);
+$txt = "Jane Doe\n";
+fwrite($myfile, $txt);
+fclose($myfile);
+echo "samp2.txt has been overwritten.<br>";
+
+echo "<h3>Creating/Overwriting newfile.txt:</h3>";
+$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+$txt = "Mickey Mouse\n";
+fwrite($myfile, $txt);
+$txt = "Minnie Mouse\n";
+fwrite($myfile, $txt);
+fclose($myfile);
+echo "newfile.txt created and overwritten.<br>";
+
+
+echo "<h3>Appending to newfile.txt:</h3>";
+$myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
+$txt = "Donald Duck\n";
+fwrite($myfile, $txt);
+$txt = "Goofy Goof\n";
+fwrite($myfile, $txt);
+fclose($myfile);
+echo "Data appended to newfile.txt.<br>";
+?>
+</body>
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>String, Math, and Date Function</title>
+</head>
+<body>
+
+<h2>Enter Your Data</h2>
+<form method="post" action="">
+    <label>Enter a String:</label><br>
+    <input type="text" name="user_string"><br><br>
+
+    <label>Enter a Number:</label><br>
+    <input type="number" step="any" name="user_number"><br><br>
+
+    <label>Enter a Date:</label><br>
+    <input type="date" name="user_date"><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userString = $_POST['user_string'];
+    $userNumber = $_POST['user_number'];
+    $userDate = $_POST['user_date'];
+
+    echo "<h2>String Functions</h2>";
+    echo "Original String: '" . $userString . "'<br>";
+    echo "Length: " . strlen($userString) . "<br>";
+    echo "Uppercase: " . strtoupper($userString) . "<br>";
+    echo "Replaced 'a' with '@': " . str_replace("a", "@", $userString) . "<br>";
+
+    echo "<h2>Math Functions</h2>";
+    echo "Original Number: $userNumber<br>";
+    echo "Absolute Value: " . abs($userNumber) . "<br>";
+    echo "Square Root (if positive): " . ($userNumber >= 0 ? sqrt($userNumber) : "N/A") . "<br>";
+
+    echo "<h2>Date Functions</h2>";
+    echo "Input Date: $userDate<br>";
+    $timestamp = strtotime($userDate);
+    echo "Formatted Date: " . date("l, F j, Y", $timestamp) . "<br>";
+    echo "Unix Timestamp: " . $timestamp . "<br>";
+}
+?>
+</body>
+</html>
+
+
