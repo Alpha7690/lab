@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Program 2: File Handling Functions </h1>
+<form method=”get”>
+1.Create <br>2.Write<br>3.Read<br>4.Copy<br>5.Delete<br><br>
+Enter your choice:<br>
+<input type=”text” name=”choice”><br>
+Enter filename:<br>
+<input type=”text” name=”filename”><br>
+Enter content (if needed):<br>
+<textarea name=”content” rows=”4” cols=”30”></textarea><br><br>
+<input type=”submit” value=”Submit”><br>
+</form>
 <?php
-echo "<h3>Reading from samp2.txt:</h3>";
-$myfile = fopen("samp2.txt", "r") or die("Unable to open file!");
-echo nl2br(fread($myfile, filesize("samp2.txt")));
-fclose($myfile);
-
-echo "<h3>Writing (overwriting) samp2.txt:</h3>";
-$myfile = fopen("samp2.txt", "w") or die("Unable to open file!");
-$txt = "John Doe\n";
-fwrite($myfile, $txt);
-$txt = "Jane Doe\n";
-fwrite($myfile, $txt);
-fclose($myfile);
-echo "samp2.txt has been overwritten.<br>";
-
-echo "<h3>Creating/Overwriting newfile.txt:</h3>";
-$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
-$txt = "Mickey Mouse\n";
-fwrite($myfile, $txt);
-$txt = "Minnie Mouse\n";
-fwrite($myfile, $txt);
-fclose($myfile);
-echo "newfile.txt created and overwritten.<br>";
-
-
-echo "<h3>Appending to newfile.txt:</h3>";
-$myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
-$txt = "Donald Duck\n";
-fwrite($myfile, $txt);
-$txt = "Goofy Goof\n";
-fwrite($myfile, $txt);
-fclose($myfile);
-echo "Data appended to newfile.txt.<br>";
+If (isset($_GET[‘choice’], $_GET[‘filename’])) {
+    $choice = $_GET[‘choice’];
+    $file = $_GET[‘filename’];
+    $txt = $_GET[‘content’] ?? “”;
+    Switch ($choice) {
+        Case 1:
+            Echo fopen($file, “w”) ? “File Created” : “Create Failed”;
+            Break;
+        Case 2:
+            Echo file_put_contents($file, $txt) !== false ? “Written” : “Write Failed”;
+            Break;
+        Case 3:
+            Echo file_exists($file) ? nl2br(file_get_contents($file)) : “Not Found”;
+            Break;
+        Case 4:
+            Echo copy($file, “copy_$file”) ? “Copied” : “Copy Failed”;
+            Break;
+        Case 5:
+            Echo unlink($file) ? “Deleted” : “Delete Failed”;
+            Break;
+        Default:
+            Echo “<p>Invalid choice</p>”;
+    }
+}
 ?>
 </body>
 </html>
+
 
 
 
