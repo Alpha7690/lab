@@ -21,7 +21,7 @@
 
     <EditText
         android:id="@+id/editTextName"
-        android:layout_width="wrap_content"
+        android:layout_width="wrap_content"	
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewResult"
         android:layout_centerHorizontal="true"
@@ -56,7 +56,7 @@
 
 
 
-package com.example.program1;
+package com.example.kalaimathi;
 
 import android.app.Activity;
 import android.os.Bundle;
