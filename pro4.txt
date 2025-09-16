@@ -19,7 +19,7 @@
 
 </RelativeLayout>
 
-package com.example.program4;
+package com.example.prog4;
 
 import android.app.Activity;
 import android.os.Bundle;
