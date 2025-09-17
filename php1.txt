@@ -1,42 +1,41 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
 <body>
-<form action="program1.php" method="GET">
-1.sum of digits<br>
-2.factorial<br>
-enter your choice:(1 or 2)<br>
-<input type ="text" name="choice"><br>
-"enter a number:"<br>
-<input type ="text" name="b"><br>
-<input type="submit" name="visit" value="submit"><br>
+<form method="get">
+    <input type="radio" name="choice" value="1"> Sum of Digits<br>
+    <input type="radio" name="choice" value="2"> Factorial<br><br>
+    <input type="text" name="b" placeholder="Enter a number"><br><br>
+    <input type="submit" value="Submit">
 </form>
+
 <?php
-$val=$_GET["b"];
-$n=$_GET["choice"];
-switch($n)
-{
-   case 1:
-       $c=0;
-       while($val>0)
-       {
-       $r=$val%10;
-       $c+=$r;
-       $val=$val/10;
-       }
-   echo "sum of digits:" .$c;
-   break;
- 
-   case 2:
-       $f=1;
-       while($val>0)
-       {
-       $f*=$val;
-       $val--;
-       }
-       echo "factorial of" .$f;
-       break;
+if (isset($_GET["choice"]) && isset($_GET["b"]) && $_GET["b"] !== "") {
+    $n = (int)$_GET["b"];
+    $choice = (int)$_GET["choice"];
+
+    switch ($choice) {
+        case 1:
+            $digits = str_split((string)abs($n));
+            $sum = array_sum($digits);
+            echo "<p>Sum of digits of $n is: $sum</p>";
+            break;
+
+        case 2:
+            if ($n < 0) {
+                echo "<p>Factorial not defined for negative numbers.</p>";
+            } else {
+                $factorial = 1;
+                for ($i = 1; $i <= $n; $i++) {
+                    $factorial *= $i;
+                }
+                echo "<p>Factorial of $n is: $factorial</p>";
+            }
+            break;
+
+        default:
+            echo "<p>Invalid choice</p>";
+    }
 }
 ?>
 </body>
 </html>
- 
