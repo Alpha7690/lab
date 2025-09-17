@@ -23,7 +23,7 @@
 
 <?php
 if (isset($_GET['choice'], $_GET['filename'])) {
-    $choice = (int)$_GET['choice'];   // Convert to integer
+    $choice = (int)$_GET['choice'];   
     $file   = trim($_GET['filename']);
     $txt    = $_GET['content'] ?? "";
 
