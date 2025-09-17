@@ -1,44 +1,85 @@
 <!DOCTYPE html>
 <html>
 <body>
-<form method=”get”>
-1.Create <br>2.Write<br>3.Read<br>4.Copy<br>5.Delete<br><br>
-Enter your choice:<br>
-<input type=”text” name=”choice”><br>
-Enter filename:<br>
-<input type=”text” name=”filename”><br>
-Enter content (if needed):<br>
-<textarea name=”content” rows=”4” cols=”30”></textarea><br><br>
-<input type=”submit” value=”Submit”><br>
+<form method="get">
+    <b>Menu:</b><br>
+    1. Create <br>
+    2. Write <br>
+    3. Read <br>
+    4. Copy <br>
+    5. Delete <br><br>
+
+    Enter your choice:<br>
+    <input type="text" name="choice"><br><br>
+
+    Enter filename:<br>
+    <input type="text" name="filename"><br><br>
+
+    Enter content (if needed):<br>
+    <textarea name="content" rows="4" cols="30"></textarea><br><br>
+
+    <input type="submit" value="Submit"><br>
 </form>
+
 <?php
-If (isset($_GET[‘choice’], $_GET[‘filename’])) {
-    $choice = $_GET[‘choice’];
-    $file = $_GET[‘filename’];
-    $txt = $_GET[‘content’] ?? “”;
-    Switch ($choice) {
-        Case 1:
-            Echo fopen($file, “w”) ? “File Created” : “Create Failed”;
-            Break;
-        Case 2:
-            Echo file_put_contents($file, $txt) !== false ? “Written” : “Write Failed”;
-            Break;
-        Case 3:
-            Echo file_exists($file) ? nl2br(file_get_contents($file)) : “Not Found”;
-            Break;
-        Case 4:
-            Echo copy($file, “copy_$file”) ? “Copied” : “Copy Failed”;
-            Break;
-        Case 5:
-            Echo unlink($file) ? “Deleted” : “Delete Failed”;
-            Break;
-        Default:
-            Echo “<p>Invalid choice</p>”;
+if (isset($_GET['choice'], $_GET['filename'])) {
+    $choice = (int)$_GET['choice'];   // Convert to integer
+    $file   = trim($_GET['filename']);
+    $txt    = $_GET['content'] ?? "";
+
+    switch ($choice) {
+        case 1:
+            $handle = fopen($file, "w");
+            if ($handle) {
+                fclose($handle);
+                echo "<p>File '$file' created successfully.</p>";
+            } else {
+                echo "<p>File creation failed.</p>";
+            }
+            break;
+
+        case 2: 
+            if (file_put_contents($file, $txt) !== false) {
+                echo "<p>Content written to '$file'.</p>";
+            } else {
+                echo "<p>Failed to write to file.</p>";
+            }
+            break;
+
+        case 3: 
+            if (file_exists($file)) {
+                echo "<h3>Contents of '$file':</h3>";
+                echo "<pre>" . htmlspecialchars(file_get_contents($file)) . "</pre>";
+            } else {
+                echo "<p>File not found.</p>";
+            }
+            break;
+
+        case 4: 
+            $newFile = "copy_" . $file;
+            if (file_exists($file) && copy($file, $newFile)) {
+                echo "<p>File copied to '$newFile'.</p>";
+            } else {
+                echo "<p>Copy failed.</p>";
+            }
+            break;
+
+        case 5: // Delete
+            if (file_exists($file) && unlink($file)) {
+                echo "<p>File '$file' deleted successfully.</p>";
+            } else {
+                echo "<p>Delete failed.</p>";
+            }
+            break;
+
+        default:
+            echo "<p>Invalid choice (must be 1–5).</p>";
     }
 }
 ?>
 </body>
 </html>
+
 
 
 
